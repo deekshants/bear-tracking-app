@@ -1,0 +1,44 @@
+<template>
+    <lightning-card>
+        <div class="slds-m-around_medium">
+            <template if:false={showRelatedObjects}>
+                <lightning-combobox name="field" label="Field" value={fieldValue} placeholder="Select Field"
+                    options={options} onchange={handleFieldChange}></lightning-combobox>
+            </template>
+            <lightning-input type="checkbox" label="Use Related Objects" onchange={showObjectsChange}
+                checked={showRelatedObjects}></lightning-input>
+            <template if:true={isBarChart}>
+                <lightning-combobox name="duration" label="Time Duration" value={durationValue}
+                    placeholder="Select Duration" options={durationOptions} onchange={handleDurationChange}>
+                </lightning-combobox>
+                <lightning-combobox name="identifiers" label="Record Identifier" value={identifierValue}
+                    placeholder="Select Identifier" options={recordIdentifiers} onchange={handleIdentifierChange}>
+                </lightning-combobox>
+
+                <template if:true={showRelatedObjects}>
+                    <lightning-combobox name="realtedObjects" label="Related Objects" value={selectedObject}
+                        placeholder="Sorry, no related objects" options={relatedObjects}
+                        onchange={handleRelatedObjectChange}>
+                    </lightning-combobox>
+                    <lightning-input type="checkbox" label="Use Realted Obejct's Fields"
+                        onchange={showChildFieldsChange} checked={showChildFields}></lightning-input>
+
+                    <template if:true={showChildFields}>
+                        <lightning-combobox name="childFields" label="Child Fields"
+                            placeholder="Sorry, No compatible fields in this object" value={childFieldValue}
+                            options={childFieldOptions} onchange={handleChildFieldChange}>
+                        </lightning-combobox>
+
+                        <lightning-radio-group name="avg/sum" label="Operations" options={avgSumOptions}
+                            value={avgSumValue} type="button" onchange={handleAvgSumChange}>
+                        </lightning-radio-group>
+                    </template>
+                </template>
+            </template>
+
+            <div style="overflow-x: scroll; max-height: 500; max-width: 1000;">
+                <canvas class="barChart" width="1000" height="500"></canvas>
+            </div>
+        </div>
+    </lightning-card>
+</template>
